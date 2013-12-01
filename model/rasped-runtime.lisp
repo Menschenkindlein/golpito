@@ -61,18 +61,19 @@
 (defgeneric save (instance))
 
 (defmethod save ((instance entity))
-  (with-slots (name title description) instance
+  (with-slots (name title description logo) instance
     (let ((real-instance (get-instance (class-name (class-of instance))
                                        name)))
       (if real-instance
           (setf (slot-value real-instance 'title) title
+                (slot-value real-instance 'logo) logo
                 (slot-value real-instance 'description) description)
           (set-instance (class-name (class-of instance))
                         name
                         instance)))))
 
 (defmethod save ((instance article))
-  (with-slots (name title description authors tags category date text) instance
+  (with-slots (name title description authors tags category date text logo) instance
     (let ((r-authors (mapcar (lambda (author) (get-author (slot-value author 'name))) authors))
           (r-tags (mapcar (lambda (tag) (get-tag (slot-value tag 'name))) tags))
           (r-category (get-category (slot-value category 'name))))
@@ -80,9 +81,9 @@
        (if (get-article name)
            #'update-article
            #'insert-article)
-       name title description r-authors r-tags r-category date text))))
+       name title description r-authors r-tags r-category date text logo))))
 
-(defun insert-article (name title description authors tags category date text)
+(defun insert-article (name title description authors tags category date text logo)
   (set-instance
    'article
    name
@@ -96,12 +97,13 @@
                   :category category
                   :tags tags
                   :date date
+                  :logo logo
                   :text text)))
 
-(defun update-article (name newtitle newdescription newauthors newtags newcategory newdate newtext)
+(defun update-article (name newtitle newdescription newauthors newtags newcategory newdate newtext newlogo)
   (with-slots (title description
                      authors primary-author moreauthorsp
-                     tags category date text)
+                     tags category date text logo)
       (get-article name)
     (setf title newtitle
           description newdescription
@@ -111,4 +113,5 @@
           tags newtags
           category newcategory
           date newdate
-          text newtext)))
+          text newtext
+          logo newlogo)))

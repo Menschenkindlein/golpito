@@ -175,6 +175,37 @@
                  (slot-value primary-author 'title)
                  moreauthorsp))))
 
+(defun render-list-of-articles-for-main (articles stream)
+  (loop for article in articles
+     do
+       (with-slots (name title logo description primary-author moreauthorsp category date) article
+         (format stream
+                 "
+    <div class=\"col-6 col-sm-6 col-lg-4\">
+      <a style=\"text-decoration: none; color: #000000;\" href=\"~a\" >
+        <h2>~a</h2>
+        <h4>~a</h4>
+        <a href=\"~3:*~a~2*\" class=\"thumbnail\">
+          <img src=\"~a\" alt=\"...\">
+        </a>
+        <p>~a</p>
+        <h4 style=\"position:relative;\">
+          <span class=\"label label-warning\" style=\"position:absolute; left:0;\"><a style=\"text-decoration: none; color: white;\" href=\"~a\">~a</a></span>
+          <span class=\"label label-default\" style=\"position:absolute; right:0;\"><a style=\"text-decoration: none; color: white;\" href=\"~a\">~a</a>~@[~* etc.~]</span>
+        </h4>
+      </a>
+    </div>"
+                 (restas:genurl *article-page-symbol* :article name)
+                 title
+                 (time-to-string date)
+                 logo
+                 description
+                 (restas:genurl *category-page-symbol* :category (slot-value category 'name))
+                 (slot-value category 'title)
+                 (restas:genurl *author-page-symbol* :author (slot-value primary-author 'name))
+                 (slot-value primary-author 'title)
+                 moreauthorsp))))
+
 (defun tmpl-main (articles)
   (with-output-to-string (out)
     (format out "<!DOCTYPE html>
@@ -182,22 +213,64 @@
   <head>
     <title>Golpito - своевременный удар</title>
     ~a
+
   </head>
  <body>
    
    <div id=\"wrap\">
      
-     ~a
-
      <!-- Begin page content -->
      <div class=\"container\">
        <div class=\"page-header\">
          <h1>Golpito - своевременный удар</h1>
        </div>
+     </div>
+     <div id=\"myCarousel\" class=\"carousel slide\" data-ride=\"carousel\">
+     <!-- Indicators -->
+       <ol class=\"carousel-indicators\">
+         <li data-target=\"#myCarousel\" data-slide-to=\"0\" class=\"active\"></li>
+~{
+         <li data-target=\"#myCarousel\" data-slide-to=\"~a\" class=\"\"></li>
+~}
+       </ol>
+       <div class=\"carousel-inner\" >
+~{
+         <div class=\"item active\" style=\"height:400px; overflow:hidden;\">
+           <img src=\"~a\" style=\"width: 100%;\" alt=\"logo\" />
+           <div class=\"container\">
+             <div class=\"carousel-caption\">
+               <h4><a href=\"~a\">~a</a></h4>
+               <p>~a</p>
+             </div>
+           </div>
+         </div>
+~}
+~{~{
+         <div class=\"item\" style=\"height:400px; overflow:hidden;\">
+           <img src=\"~a\" style=\"width: 100%;\" alt=\"logo\" />
+           <div class=\"container\">
+             <div class=\"carousel-caption\">
+               <h4><a href=\"~a\">~a</a></h4>
+               <p>~a</p>
+             </div>
+           </div>
+         </div>
+~}~}
+      </div>
+      <a class=\"left carousel-control\" href=\"#myCarousel\" data-slide=\"prev\"><span></span></a>
+      <a class=\"right carousel-control\" href=\"#myCarousel\" data-slide=\"next\"><span></span></a>
+    </div>
+     <div class=\"container\">
 "
             (head)
-            (nav-bar))
-    (render-list-of-articles articles out)
+            (loop for i from 1 to (length (cdr articles)) collect i)
+            (with-slots (logo name title description) (car articles)
+              (list logo (restas:genurl *article-page-symbol* :article name) title description))
+            (mapcar (lambda (article)
+                      (with-slots (logo name title description) article
+                        (list logo (restas:genurl *article-page-symbol* :article name) title description)))
+                    (cdr articles)))
+    (render-list-of-articles-for-main articles out)
     (format out "
      </div>
     </div>

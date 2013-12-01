@@ -12,6 +12,7 @@
            #:get-bunch-of-articles
            #:title
            #:description
+           #:logo
            #:name
            #:text
            #:date
@@ -25,6 +26,7 @@
 (defmodel entity ()
   ((name)
    (title)
+   (logo)
    (description))
   (:key name))
 

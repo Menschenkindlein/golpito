@@ -5,7 +5,7 @@
         (name title description
               authors
               tags category
-              date text)
+              date text logo)
       article
     (format nil
             "<html>
@@ -16,6 +16,8 @@
     <h1>Edit article</h1>
     <form action=\"~a\" method=\"post\">
       <input type=\"hidden\" value=\"~a\" name=\"name\" />
+      <img src=\"~a\" /><br />
+      <label><input type=\"text\" value=\"~:*~a\" name=\"logo\" /> URL картинки</label><br />
       <label><input type=\"text\" value=\"~a\" name=\"title\" /> Название статьи</label><br />
       <label><input type=\"text\" value=\"~{~a~^ ~}\" name=\"authors\" /> Авторы статьи, разделенные пробелами</label><br />
       <label><input type=\"text\" value=\"~{~a~^ ~}\" name=\"tags\" /> Теги статьи, разделенные пробелами</label><br />
@@ -29,6 +31,7 @@
 </html>"
             (restas:genurl *edit-article-page-symbol*)
             name
+            logo
             title
             (mapcar (lambda (author) (slot-value author 'name)) authors)
             (mapcar (lambda (tag) (slot-value tag 'name)) tags)

@@ -20,6 +20,7 @@
       (make-instance 'golpito.model:article
                      :name name
                      :title "заголовок"
+                     :logo "http://www.weblogcartoons.com/cartoons/i-have-nothing-to-say.gif"
                      :authors (list (make-instance 'golpito.model:author
                                                    :name "default-author"))
                      :description "описание"
@@ -72,6 +73,7 @@
   (:decorators #'@http-auth-require)
   (:additional-variables
    (name (hunchentoot:post-parameter "name"))
+   (logo (hunchentoot:post-parameter "logo"))
    (title (hunchentoot:post-parameter "title"))
    (description (hunchentoot:post-parameter "description"))
    (authors (hunchentoot:post-parameter "authors"))
@@ -82,6 +84,7 @@
   (golpito.model:save
    (make-instance 'golpito.model:article
                   :name name
+                  :logo logo
                   :title title
                   :description description
                   :authors (mapcar (lambda (name) (make-instance 'golpito.model:author
