@@ -1,5 +1,5 @@
 (load "quicklisp/setup.lisp")
 (push #p"./" asdf:*central-registry*)
 (require :golpito-runtime)
-(restas:start :golpito)
+(restas:start :golpito :port *port*)
 (loop (sleep 60))

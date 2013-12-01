@@ -1,1 +1,1 @@
-web: sbcl --script heroku-run.lisp
+web: sbcl --eval "(defvar *port* $PORT)" --script heroku-run.lisp
