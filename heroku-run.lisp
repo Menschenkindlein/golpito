@@ -2,3 +2,4 @@
 (push #p"./" asdf:*central-registry*)
 (require :golpito-runtime)
 (restas:start :golpito)
+(loop (sleep 60))
