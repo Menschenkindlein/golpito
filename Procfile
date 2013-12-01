@@ -1,0 +1,1 @@
+web: sbcl --script heroku-run.lisp
