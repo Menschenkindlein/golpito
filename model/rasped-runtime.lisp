@@ -66,7 +66,7 @@
                                        name)))
       (if real-instance
           (setf (slot-value real-instance 'title) title
-                (slot-value real-instance 'logo) logo
+;                (slot-value real-instance 'logo) logo
                 (slot-value real-instance 'description) description)
           (set-instance (class-name (class-of instance))
                         name
