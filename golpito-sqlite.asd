@@ -1,4 +1,4 @@
-(asdf:defsystem golpito
+(asdf:defsystem golpito-sqlite
     :depends-on (#:restas
                  #:closure-template
                  #:sqlite)
@@ -8,7 +8,7 @@
                           :components
                           ((:file "abstraction")
                            (:file "model")
-                           (:file "rasped")))
+                           (:file "rasped-sqlite")))
                  (:module "view"
                           :serial t
                           :components

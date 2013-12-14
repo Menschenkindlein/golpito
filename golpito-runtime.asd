@@ -1,6 +1,6 @@
 (asdf:defsystem golpito-runtime
     :depends-on (#:restas
-;;                 #:closure-template
+                 #:closure-template
                  #:sqlite)
     :serial t
     :components ((:module "model"
@@ -12,7 +12,9 @@
                  (:module "view"
                           :serial t
                           :components
-                          ((:file "templates")
+                          ((:static-file "templates.soy")
+                           (:file "compile-template")
+                           (:file "templates")
                            (:file "admin-templates")))
                  (:module "controller"
                           :serial t

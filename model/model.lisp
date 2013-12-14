@@ -11,8 +11,8 @@
            #:save
            #:get-bunch-of-articles
            #:title
-           #:description
            #:logo
+           #:description
            #:name
            #:text
            #:date
