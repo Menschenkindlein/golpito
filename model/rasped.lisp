@@ -57,7 +57,7 @@ SELECT DISTINCT article.name,article.title,article.logo,article.description,
 (defgeneric populate (instance))
 
 (defmethod populate ((instance article))
-  (with-slots (name title logo description
+  (with-slots (name title logo description featured
                     primary-author
                     moreauthorsp
                     authors tags
@@ -68,6 +68,7 @@ SELECT DISTINCT article.name,article.title,article.logo,article.description,
       (let ((row (car (postmodern:query
                        (format nil "
 SELECT DISTINCT article.name,article.title,article.logo,article.description,
+       featured,
        article.author,author.title,moreauthorsp,
        category,category.title,
        date,
@@ -80,7 +81,7 @@ SELECT DISTINCT article.name,article.title,article.logo,article.description,
  WHERE article.name = '~a'" name)))))
         (when row
           (destructuring-bind
-                (name newtitle newlogo newdescription
+                (name newtitle newlogo newdescription newfeatured
                       newprimary-author newprimary-author-fullname newmoreauthorsp
                       newcategory newcategory-title
                       newdate
@@ -89,6 +90,7 @@ SELECT DISTINCT article.name,article.title,article.logo,article.description,
             (setf title newtitle)
             (setf logo newlogo)
             (setf description newdescription)
+            (setf featured newfeatured)
             (setf primary-author (make-instance
                                   'author
                                   :name newprimary-author

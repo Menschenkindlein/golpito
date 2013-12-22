@@ -75,6 +75,7 @@
    (name (hunchentoot:post-parameter "name"))
    (logo (hunchentoot:post-parameter "logo"))
    (title (hunchentoot:post-parameter "title"))
+   (featured (hunchentoot:post-parameter "featured"))
    (description (hunchentoot:post-parameter "description"))
    (authors (hunchentoot:post-parameter "authors"))
    (tags (hunchentoot:post-parameter "tags"))
@@ -86,6 +87,7 @@
                   :name name
                   :logo logo
                   :title title
+                  :featured featured
                   :description description
                   :authors (mapcar (lambda (name) (make-instance 'golpito.model:author
                                                                  :name name))
@@ -95,7 +97,7 @@
                                    (split-sequence:split-sequence #\Space tags))
                   :category (make-instance 'golpito.model:category :name category)
                   :date (string-to-time date)
-                  :text text))
+                  :text (split-sequence:split-sequence #\Newline text)))
   (restas:redirect 'edit-article :name name))
 
 (restas:define-route edit-author-save ("/edit/author/"

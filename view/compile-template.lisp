@@ -82,7 +82,7 @@
                (declare (ignore params env))
                (time-to-string value)))
 
-(closure-template:define-print-syntax printLink (and "link" ":" (or "article" "author" "category" "tag"))
+(closure-template:define-print-syntax printLink (and "link" ":" (or "article" "edit-article" "author" "category" "tag"))
   (:destructure (link |:| type)
                 (declare (ignore link |:|))
                 (intern (string-upcase type))))
@@ -93,6 +93,7 @@
                (declare (ignore env))
                (case type
                  (article (restas:genurl *article-page-symbol* :article name))
+                 (article-edit (restas:genurl *edit-article-page-symbol*))
                  (author (restas:genurl *author-page-symbol* :author name))
                  (category (restas:genurl *category-page-symbol* :category name))
                  (tag (restas:genurl *tag-page-symbol* :tag name)))))
