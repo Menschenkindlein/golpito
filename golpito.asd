@@ -1,5 +1,6 @@
 (asdf:defsystem golpito
     :depends-on (#:restas
+                 #:postmodern
                  #:closure-template
                  #:sqlite)
     :serial t

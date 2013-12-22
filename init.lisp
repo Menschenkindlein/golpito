@@ -13,6 +13,7 @@
                      :name "firstOne"
                      :title "Первая попытка"
                      :logo "http://www.gratuit-en-ligne.com/telecharger-gratuit-en-ligne/telecharger-image-wallpaper-gratuit/image-wallpaper-animaux/img/images/image-wallpaper-animaux-chatons.jpg"
+                     :featured t
                      :description "Статья описывает первую попытку вставки статьи на сайт"
                      :authors (list (make-instance 'author :name "default"))
                      :tags (list (make-instance 'tag :name "someError"))
@@ -23,7 +24,8 @@
 (save (make-instance 'article
                      :name "secondOne"
                      :title "Вторая попытка"
-                     :logo "http://www.shop.hidra.com.tr/wp-content/uploads/image_6186_1.jpg"
+                     :logo "http://www.uabcradio.mx/sites/default/files/styles/grande_w865/public/imagenes/episodios/luciernagas03.jpg?itok=q1Q_48Ht"
+                     :featured t
                      :description "Какие же громадные возможности перед нами открываются!"
                      :authors (list (make-instance 'author :name "default"))
                      :tags '()
@@ -38,6 +40,7 @@
                      :name "fabulousdate"
                      :title "Знаменательная дата"
                      :logo "http://wiki.ru/upload/iblock/c05/c05abb3656129f3207b5547979660549.jpg"
+                     :featured nil
                      :description "16 ноября 1933 года (80 лет назад) были установлены дипломатические отношения между СССР и США."
                      :authors (list (make-instance 'author :name "DKorolev")
                                     (make-instance 'author :name "default"))

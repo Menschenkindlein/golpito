@@ -44,7 +44,7 @@
 
 (defmacro make-environment (&rest options)
   `(list :head (list :bootstrap-css (restas:genurl *bootstrap.css*)
-                     :bootstrap-js (restas:genurl *bootstrap.css*)
+                     :bootstrap-js (restas:genurl *bootstrap.js*)
                      :jquery-js (restas:genurl *jquery.js*))
          ,@options))
 
@@ -62,6 +62,16 @@
                              :content-type "application/javascript")
   (local-pathname :name "jquery"
                   :type "js"
+                  :directory '(:relative "static")))
+(restas:define-route jquery.js ("js/jquery.js"
+                             :content-type "application/javascript")
+  (local-pathname :name "jquery"
+                  :type "js"
+                  :directory '(:relative "static")))
+(restas:define-route glyphicons ("css/glyphicons-halflings-regular.:type"
+                                 :content-type "application/xml")
+  (local-pathname :name "glyphicons-halflings-regular"
+                  :type type
                   :directory '(:relative "static")))
 
 (defun time-to-string (universal-time)

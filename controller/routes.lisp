@@ -3,13 +3,17 @@
 (restas:define-route main ("/"
                            :content-type "text/html")
   (:render-method #'golpito.view:tmpl-main)
-  (golpito.model:get-bunch-of-articles))
+  (list
+   (golpito.model:get-bunch-of-articles :featured t)
+   (golpito.model:get-bunch-of-articles)))
 
 (restas:define-route main-page ("/:page/"
                            :content-type "text/html")
   (:render-method #'golpito.view:tmpl-main)
   (:sift-variables (page #'parse-integer))
-  (golpito.model:get-bunch-of-articles :page page))
+  (list
+   (golpito.model:get-bunch-of-articles :featured t)
+   (golpito.model:get-bunch-of-articles :page page)))
 
 (restas:define-route article ("/article/:article"
                               :content-type "text/html")

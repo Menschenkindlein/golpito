@@ -12,6 +12,7 @@
            #:get-bunch-of-articles
            #:title
            #:logo
+           #:featured
            #:description
            #:name
            #:text
@@ -36,6 +37,7 @@
 (defmodel article (entity)
   ((authors :list author :has-first)
    (tags :list tag)
+   (featured :boolean)
    (category category)
    (date :date)
    (text :text)))

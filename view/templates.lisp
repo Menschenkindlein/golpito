@@ -3,8 +3,12 @@
 (defun tmpl-article (article)
   (golpito.view.tmpl:article (make-environment :article article)))
 
-(defun tmpl-main (list-of-articles)
-  (golpito.view.tmpl:main (make-environment :super-articles list-of-articles :articles list-of-articles)))
+(defun tmpl-main (two-lists-of-articles)
+  (golpito.view.tmpl:main
+   (make-environment
+    :super-articles (first two-lists-of-articles)
+    :articles (second two-lists-of-articles)
+    :news (second two-lists-of-articles))))
 
 (defun tmpl-list-page (category list-of-articles)
   (if (listp category)

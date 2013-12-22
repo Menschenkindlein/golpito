@@ -1,54 +1,13 @@
 (in-package #:golpito.model)
 
-(defvar *database-path*
-  (merge-pathnames "database.sqlite3"
-                   (asdf:component-pathname
-                    (asdf:find-system :golpito))))
+(defvar *connection* '("golpito" "maximo" "maximo" "localhost"))
 
-(defgeneric ensure-tables (model))
-(defmethod ensure-tables ((model entity))
-  (sqlite:with-open-database (db *database-path*)
-    (let ((model-name (string-downcase (string (class-name (class-of model))))))
-      (unless (sqlite:execute-to-list db "SELECT sql FROM sqlite_master WHERE tbl_name = ?"
-                                      model-name)
-        (sqlite:execute-non-query db 
-                                  (format nil "
-CREATE TABLE ~a (name     VARCHAR PRIMARY KEY,
-                 title    VARCHAR NOT NULL,
-                 logo     VARCHAR
-                 description TEXT NOT NULL);"
-                                          model-name))))))
+(defmacro with-connection (&body body)
+  `(postmodern:with-connection *connection*
+     ,@body))
 
-(defmethod ensure-tables ((model article))
-  (sqlite:with-open-database (db *database-path*)
-    (unless (sqlite:execute-to-list db "SELECT sql FROM sqlite_master WHERE tbl_name = 'article'")
-      (sqlite:execute-non-query db "
-CREATE TABLE article (name     VARCHAR PRIMARY KEY,
-                      title    VARCHAR NOT NULL,
-                      logo     VARCHAR
-                      description TEXT NOT NULL,
-                      author   VARCHAR NOT NULL,
-                      moreauthorsp INTEGER NOT NULL,
-                      category VARCHAR NOT NULL,
-                      date     INTEGER NOT NULL,
-                      text     TEXT NOT NULL,
-                      FOREIGN KEY(category) REFERENCES category(name),
-                      FOREIGN KEY(author) REFERENCES author(name));")
-      (sqlite:execute-non-query db "
-CREATE TABLE linktag (article  VARCHAR NOT NULL,
-                      tag      VARCHAR NOT NULL,
-                      UNIQUE(article, tag),
-                      FOREIGN KEY(article) REFERENCES article(name),
-                      FOREIGN KEY(tag) REFERENCES tag(name));")
-      (sqlite:execute-non-query db "
-CREATE TABLE linkauthor (article  VARCHAR NOT NULL,
-                         author   VARCHAR NOT NULL,
-                         UNIQUE(article, author),
-                         FOREIGN KEY(article) REFERENCES article(name),
-                         FOREIGN KEY(author) REFERENCES author(name));"))))
-
-(defun get-bunch-of-articles (&key (page 1) (number 20) category tag author)
-  (sqlite:with-open-database (db *database-path*)
+(defun get-bunch-of-articles (&key (page 1) (number 20) category tag author featured)
+  (with-connection
     (mapcar
      (lambda (row)
        (destructuring-bind
@@ -72,8 +31,8 @@ CREATE TABLE linkauthor (article  VARCHAR NOT NULL,
                                    :name category
                                    :title category-title)
                         :date (* date 60))))
-    (sqlite:execute-to-list db
-                            (format nil "
+    (postmodern:query
+     (format nil "
 SELECT DISTINCT article.name,article.title,article.logo,article.description,
        article.author,author.title,moreauthorsp,
        category,category.title,
@@ -90,23 +49,24 @@ SELECT DISTINCT article.name,article.title,article.logo,article.description,
        WHERE ~:[1=1~;category = '~:*~a'~]
          AND ~:[1=1~;linktag.tag = '~:*~a'~]
          AND ~:[1=1~;linkauthor.author = '~:*~a'~]
-       ORDER BY date DESC LIMIT ? OFFSET ?;" category tag author)
-                            number (* (1- page) number)))))
-
-(loop for model in (list 'category 'tag 'author 'article) do
-     (ensure-tables (make-instance model)))
+         AND ~:[1=1~;featured = TRUE~]
+       ORDER BY date DESC LIMIT ~a OFFSET ~a;"
+             category tag author featured
+             number (* (1- page) number))))))
 
 (defgeneric populate (instance))
 
 (defmethod populate ((instance article))
   (with-slots (name title logo description
                     primary-author
+                    moreauthorsp
                     authors tags
                     category
                     date
                     text) instance
-    (sqlite:with-open-database (db *database-path*)
-      (let ((row (car (sqlite:execute-to-list db "
+    (with-connection
+      (let ((row (car (postmodern:query
+                       (format nil "
 SELECT DISTINCT article.name,article.title,article.logo,article.description,
        article.author,author.title,moreauthorsp,
        category,category.title,
@@ -117,7 +77,7 @@ SELECT DISTINCT article.name,article.title,article.logo,article.description,
     ON article.author=author.name
   JOIN category
     ON category=category.name
- WHERE article.name = ?" name))))
+ WHERE article.name = '~a'" name)))))
         (when row
           (destructuring-bind
                 (name newtitle newlogo newdescription
@@ -139,40 +99,37 @@ SELECT DISTINCT article.name,article.title,article.logo,article.description,
                             :name newcategory
                             :title newcategory-title))
             (setf date (* newdate 60))
-            (setf text newtext)
+            (setf text (split-sequence:split-sequence #\Newline newtext))
             (setf authors
-                  (get-assotiations db instance 'author))
+                  (get-assotiations instance 'author))
             (setf tags
-                  (get-assotiations db instance 'tag)))
+                  (get-assotiations instance 'tag)))
           instance)))))
 
-(defun get-assotiations (db from to)
+(defun get-assotiations (from to)
   (mapcar (lambda (row)
             (destructuring-bind (name fullname) row
               (make-instance to
                              :name name
                              :title fullname)))
-          (sqlite:execute-to-list
-           db 
-           (format nil "
+          (postmodern:query (format nil "
 SELECT name, title
   FROM ~a
   JOIN link~:*~a
     ON ~:*~a.name=link~:*~a.~:*~a
-       WHERE link~:*~a.article = ?;"
-                   (string-downcase (string to)))
-           (slot-value from 'name))))
+       WHERE link~:*~a.article = '~a';"
+                   (string-downcase (string to))
+                   (slot-value from 'name)))))
 
 (defmethod populate ((instance entity))
   (with-slots (name title logo description) instance
-    (sqlite:with-open-database (db *database-path*)
+    (with-connection
       (let ((row (car
-                  (sqlite:execute-to-list
-                   db
+                  (postmodern:query
                    (format nil
-                           "SELECT * FROM ~a WHERE name = ?"
-                           (class-name (class-of instance)))
-                   name))))
+                           "SELECT * FROM ~a WHERE name = '~a'"
+                           (class-name (class-of instance))
+                           name)))))
         (when row
           (destructuring-bind (name newtitle newlogo newdescription)
               row
@@ -194,113 +151,114 @@ SELECT name, title
 
 (defmethod save ((instance entity))
   (with-slots (name title description) instance
-    (sqlite:with-open-database (db *database-path*)
+    (with-connection
       (let ((model-name (string-downcase (string (class-name (class-of instance))))))
-        (if (car (sqlite:execute-to-list db (format nil "SELECT * FROM ~a WHERE name = ?" model-name) name))
-            (sqlite:execute-non-query db (format nil "UPDATE ~a SET title = ?, description = ? WHERE name = ?" model-name) title description name)
-            (sqlite:execute-non-query db (format nil "INSERT INTO ~a (name,title,description) VALUES (?,?,?)" model-name) name title description))))))
+        (if (car (postmodern:query (format nil "SELECT * FROM ~a WHERE name = '~a'" model-name name)))
+            (postmodern:execute (format nil "UPDATE ~a SET title = '~a', description = '~a' WHERE name = '~a'" model-name title description name))
+            (postmodern:execute (format nil "INSERT INTO ~a (name,title,description) VALUES ('~a','~a','~a')" model-name name title description)))))))
 
 (defmethod save ((instance article))
-  (with-slots (name title logo description authors tags category date text) instance
+  (with-slots (name title logo featured description authors tags category date text) instance
     (let ((authors-names (mapcar (lambda (author) (slot-value author 'name)) authors))
           (tags-names (mapcar (lambda (tag) (slot-value tag 'name)) tags))
           (category-name (slot-value category 'name)))
-      (sqlite:with-open-database (db *database-path*)
+      (with-connection
         (funcall
-         (if (car (sqlite:execute-to-list db "SELECT * FROM article WHERE name = ?" name))
+         (if (car (postmodern:query (format nil "SELECT * FROM article WHERE name = '~a'" name)))
             #'update-article
             #'insert-article)
-         name title logo description authors-names tags-names category-name (floor date 60) text)))))
+         name title logo featured description authors-names tags-names category-name (floor date 60) text)))))
 
-(defun insert-article (name title logo description authors tags category date text)
-  (sqlite:with-open-database (db *database-path*)
-    (sqlite:execute-non-query db "
-INSERT INTO article (name,title,logo,author,moreauthorsp,description,category,date,text)
-             VALUES (   ?,    ?,   ?,     ?,           ?,          ?,       ?,   ?,   ?)"
-                              name
-                              title
-                              logo
-                              (car authors)
-                              (if (null (cdr authors)) 0 1)
-                              description
-                              category
-                              date
-                              text)
+(defun insert-article (name title logo featured description authors tags category date text)
+  (with-connection
+    (postmodern:execute (format nil "
+INSERT INTO article (name,title,logo,        featured,author,moreauthorsp,description,category,date,      text)
+             VALUES ('~a', '~a','~a',~:[FALSE~;TRUE~],  '~a',          ~a,       '~a',    '~a',  ~a,'~{~a~%~}')"
+                                name
+                                title
+                                logo
+                                featured
+                                (car authors)
+                                (if (null (cdr authors)) 0 1)
+                                description
+                                category
+                                date
+                                text))
     (loop for author in authors do
-         (sqlite:execute-non-query db "
+         (postmodern:execute (format nil "
 INSERT INTO linkauthor (article, author)
-                VALUES (      ?,      ?);"
-                                   name
-                                   author))
+                VALUES (   '~a',   '~a');"
+                                     name
+                                     author)))
     (loop for tag in tags do
-         (sqlite:execute-non-query db "
+         (postmodern:execute (format nil "
 INSERT INTO linktag (article, tag)
-             VALUES (      ?,   ?);"
-                                   name
-                                   tag))))
+             VALUES (   '~a','~a');"
+                                     name
+                                     tag)))))
 
-(defun update-article (name title logo description authors tags category date text)
-  (sqlite:with-open-database (db *database-path*)
-    (sqlite:execute-non-query db "
+(defun update-article (name title logo featured description authors tags category date text)
+  (with-connection
+    (postmodern:execute (format nil "
 UPDATE article
-   SET title = ?,
-       logo = ?,
-       author = ?,
-       moreauthorsp = ?,
-       description = ?,
-       category = ?,
-       date = ?,
-       text = ?
- WHERE name = ?;"
-                              title
-                              logo
-                              (car authors)
-                              (if (null (cdr authors)) 0 1)
-                              description
-                              category
-                              date
-                              text
-                              name)
+   SET title = '~a',
+       logo = '~a',
+       featured = ~:[FALSE~;TRUE~],
+       author = '~a',
+       moreauthorsp = ~a,
+       description = '~a',
+       category = '~a',
+       date = ~a,
+       text = '~{~a~%~}'
+ WHERE name = '~a';"
+                                title
+                                logo
+                                featured
+                                (car authors)
+                                (if (null (cdr authors)) 0 1)
+                                description
+                                category
+                                date
+                                text
+                                name))
     (let ((old-authors
            (mapcar #'car
-                   (sqlite:execute-to-list db
-                                           "
+                   (postmodern:query (format nil "
 SELECT name
 FROM author
 JOIN linkauthor ON linkauthor.author = author.name
-WHERE linkauthor.article = ?;"
-                                           name))))
+WHERE linkauthor.article = '~a';"
+                                             name)))))
       (loop for author in (set-difference authors old-authors :test #'equal) do
-           (sqlite:execute-non-query db "
+           (postmodern:execute (format nil "
 INSERT INTO linkauthor (article, author)
-                 VALUES (      ?,      ?);"
-                                     name
-                                     author))
+                VALUES (   '~a',   '~a');"
+                                       name
+                                       author)))
       (loop for badauthor in (set-difference old-authors authors :test #'equal) do
-           (sqlite:execute-non-query db "
+           (postmodern:execute (format nil "
 DELETE FROM linkauthor
-WHERE article = ? AND author = ?;"
-                                     name
-                                     badauthor)))
+WHERE article = '~a' AND author = '~a';"
+                                       name
+                                       badauthor))))
 
     (let ((old-tags
            (mapcar #'car
-                   (sqlite:execute-to-list db
-                                           "
+                   (postmodern:query (format nil "
 SELECT name
 FROM tag
 JOIN linktag ON linktag.tag = tag.name
-WHERE linktag.article = ?"
-                                           name))))
+WHERE linktag.article = '~a'"
+                                             name)))))
       (loop for tag in (set-difference tags old-tags :test #'equal) do
-           (sqlite:execute-non-query db "
+           (postmodern:execute (format nil "
 INSERT INTO linktag (article, tag)
-              VALUES (      ?,   ?);"
-                                     name
-                                     tag))
+             VALUES (   '~a','~a');"
+                                       name
+                                       tag)))
       (loop for badtag in (set-difference old-tags tags :test #'equal) do
-           (sqlite:execute-non-query db "
+           (postmodern:execute (format nil "
 DELETE FROM linktag
-WHERE article = ? AND tag = ?;"
-                                     name
-                                     badtag)))))
+WHERE article = '~a' AND tag = '~a';"
+                                       name
+                                       badtag))))))
