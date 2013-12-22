@@ -1,9 +1,9 @@
 (in-package #:golpito.view)
 
 (defun make-environment (&rest options)
-  `(:head (list :bootstrap-css (restas:genurl *bootstrap.css*)
-                :bootstrap-js (restas:genurl *bootstrap.js*)
-                :jquery-js (restas:genurl *jquery.js*))
+  `(:head (:bootstrap-css ,(restas:genurl *bootstrap.css*)
+           :bootstrap-js ,(restas:genurl *bootstrap.js*)
+           :jquery-js ,(restas:genurl *jquery.js*))
     ,@options))
 
 (defun tmpl-article (article)
