@@ -5,6 +5,6 @@
                                     (destructuring-bind (name-password host-port) (split-sequence:split-sequence #\@ name-password-host-port)
                                       (destructuring-bind (name password) (split-sequence:split-sequence #\: name-password)
                                         (destructuring-bind (host port) (split-sequence:split-sequence #\: host-port)
-                                          (list db name password host :port port))))))
+                                          (list db name password host :port (parse-integer port)))))))
 (restas:start :golpito :port *port*)
 (loop (sleep 60))
