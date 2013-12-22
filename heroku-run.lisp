@@ -1,5 +1,6 @@
 (load "quicklisp/setup.lisp")
 (push #p"./" asdf:*central-registry*)
-(require :golpito-runtime)
+(require :golpito)
+(setf golpito.model::*connection* '("dnfm2j22kssnb" "lsganaewvkawfo" "riDZrOwFuk01BmYvy1VAC69zdp" "ec2-54-204-45-126.compute-1.amazonaws.com" 5432))
 (restas:start :golpito :port *port*)
 (loop (sleep 60))
