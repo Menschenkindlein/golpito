@@ -1,14 +1,18 @@
 (in-package #:golpito.view)
 
+(defun make-environment (&rest options)
+  `(:head (list :bootstrap-css (restas:genurl *bootstrap.css*)
+                :bootstrap-js (restas:genurl *bootstrap.js*)
+                :jquery-js (restas:genurl *jquery.js*))
+    ,@options))
+
 (defun tmpl-article (article)
   (golpito.view.tmpl:article (make-environment :article article)))
 
-(defun tmpl-main (two-lists-of-articles)
+(defun tmpl-main (lists-of-articles)
   (golpito.view.tmpl:main
-   (make-environment
-    :super-articles (first two-lists-of-articles)
-    :articles (second two-lists-of-articles)
-    :news (second two-lists-of-articles))))
+   (apply #'make-environment
+          lists-of-articles)))
 
 (defun tmpl-list-page (category list-of-articles)
   (if (listp category)

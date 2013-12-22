@@ -46,7 +46,7 @@ SELECT DISTINCT article.name,article.title,article.logo,article.description,
     ON article.author=author.name
   JOIN category
     ON category=category.name
-       WHERE ~:[1=1~;category = '~:*~a'~]
+       WHERE ~:[category <> 'news'~;category = '~:*~a'~]
          AND ~:[1=1~;linktag.tag = '~:*~a'~]
          AND ~:[1=1~;linkauthor.author = '~:*~a'~]
          AND ~:[1=1~;featured = TRUE~]

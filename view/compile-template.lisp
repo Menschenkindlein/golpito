@@ -42,12 +42,6 @@
                     (asdf:component-pathname
                      (asdf:find-system :golpito))))
 
-(defmacro make-environment (&rest options)
-  `(list :head (list :bootstrap-css (restas:genurl *bootstrap.css*)
-                     :bootstrap-js (restas:genurl *bootstrap.js*)
-                     :jquery-js (restas:genurl *jquery.js*))
-         ,@options))
-
 (restas:define-route bootstrap.css ("css/bootstrap.css"
                                     :content-type "text/css")
   (local-pathname :name "bootstrap"

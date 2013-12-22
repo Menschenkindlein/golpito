@@ -4,16 +4,14 @@
                            :content-type "text/html")
   (:render-method #'golpito.view:tmpl-main)
   (list
-   (golpito.model:get-bunch-of-articles :featured t)
-   (golpito.model:get-bunch-of-articles)))
+   :super-articles (golpito.model:get-bunch-of-articles :featured t)
+   :articles (golpito.model:get-bunch-of-articles)
+   :news (golpito.model:get-bunch-of-articles :category "news")))
 
 (restas:define-route main-page ("/:page/"
                            :content-type "text/html")
-  (:render-method #'golpito.view:tmpl-main)
   (:sift-variables (page #'parse-integer))
-  (list
-   (golpito.model:get-bunch-of-articles :featured t)
-   (golpito.model:get-bunch-of-articles :page page)))
+  (golpito.model:get-bunch-of-articles :page page))
 
 (restas:define-route article ("/article/:article"
                               :content-type "text/html")
