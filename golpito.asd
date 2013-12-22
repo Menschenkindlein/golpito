@@ -23,5 +23,4 @@
                           ((:file "package")
                            (:file "routes")
                            (:file "admin-routes")))
-                 (:file "init")
                  ))
