@@ -271,7 +271,7 @@
           <label>
             <textarea name="text">{nil}
               {foreach $paragraph in $article.text}
-                {$paragraph}{if not(isLast($paragraph))}{\n}{/if}
+                {$paragraph |noAutoescape}
               {/foreach}
             </textarea>
             Текст статьи</label><br />
