@@ -64,7 +64,7 @@
           </div>
           <p><b>{$article.date |date}</b></p>
           {foreach $paragraph in $article.text}
-            <p>{$paragraph}</p>
+            <p>{$paragraph |noAutoescape}</p>
           {/foreach}
           <p><b><a href="{$article.category.name |link:category}">{$article.category.title}</a></b></p>
           <p>
@@ -271,7 +271,7 @@
           <label>
             <textarea name="text">{nil}
               {foreach $paragraph in $article.text}
-                {$paragraph |noAutoescape}
+                {$paragraph |noAutoescape}{\n}
               {/foreach}
             </textarea>
             Текст статьи</label><br />
