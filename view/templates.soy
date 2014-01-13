@@ -70,6 +70,7 @@
           <p>
             {foreach $tag in $article.tags}
               <a href="{$tag.name |link:tag}">{$tag.title}</a>
+			  {if not(isLast($tag))};{sp}{/if}
             {/foreach}
           </p>
         </div>
