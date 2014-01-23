@@ -4501,7 +4501,7 @@ a.list-group-item.active > .badge,
   max-width: 100%;
   height: auto;
   display: block;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 .thumbnail > img {
   display: block;
