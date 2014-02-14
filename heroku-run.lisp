@@ -7,4 +7,5 @@
                                         (destructuring-bind (host port) (split-sequence:split-sequence #\: host-port)
                                           (list db name password host :port (parse-integer port)))))))
 (restas:start :golpito :port *port*)
+(setf hunchentoot:*catch-errors-p* nil)
 (loop (sleep 60))
