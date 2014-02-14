@@ -63,7 +63,7 @@
             </p>
           </div>
           <p><b>{$article.date |date}</b></p>
-          <div id="articleText">{$article.text |markdown}</div>
+          <div id="articleText">{$article.text |markdown |noAutoescape}</div>
           <p><b><a href="{$article.category.name |link:category}">{$article.category.title}</a></b></p>
           <p>
             {foreach $tag in $article.tags}
@@ -116,7 +116,7 @@
 									<div class="container">
 									  <div class="carousel-caption">
 										<h4><a href="{$superArticle.name |link:article}">{$superArticle.title}</a></h4>
-										<p>{$superArticle.description |markdown}</p>
+										<p>{$superArticle.description |markdown |noAutoescape}</p>
 									  </div>
 									</div>
 								</div>
@@ -181,7 +181,7 @@
 								<a href="{$article.name |link:article}" class="thumbnail">
 									<img src="{$article.logo}" alt="{$article.title}">
 								</a>
-								<p>{$article.description |markdown}</p>
+								<p>{$article.description |markdown |noAutoescape}</p>
 								<h5>
 									<span class="label label-primary">
 										<a style="text-decoration: none; color: white;"
@@ -226,7 +226,7 @@
     <p><b>{$date |date}</b></p>
     <p><b><a href="{$category.name |link:category}">{$category.title}</a></b></p>
     <h2><a href="{$name |link:article}">{$title}</a></h2>
-    <p>{$description |markdown}</p>
+    <p>{$description |markdown |noAutoescape}</p>
     <p><i><a href="{$primaryAuthor.name |link:author}">{$primaryAuthor.title}</a>{if $moreauthorsp}{sp}etc.{/if}</i></p>
   </div>
 {/template}
@@ -249,7 +249,7 @@
           <div class="page-header">
             <h1>{$category.title}</h1>
           </div>
-          <p>{$category.description |markdown}</p>
+          <p>{$category.description |markdown |noAutoescape}</p>
           {foreach $article in $articles}
             {call articleInTheList data="$article" /}
           {/foreach}
