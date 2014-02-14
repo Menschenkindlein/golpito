@@ -101,7 +101,7 @@ SELECT DISTINCT article.name,article.title,article.logo,article.description,
                             :name newcategory
                             :title newcategory-title))
             (setf date (* newdate 60))
-            (setf text (split-sequence:split-sequence #\Newline newtext))
+            (setf text newtext)
             (setf authors
                   (get-assotiations instance 'author))
             (setf tags
@@ -174,8 +174,8 @@ SELECT name, title
 (defun insert-article (name title logo featured description authors tags category date text)
   (with-connection
     (postmodern:execute (format nil "
-INSERT INTO article (name,title,logo,        featured,author,moreauthorsp,description,category,date,      text)
-             VALUES ('~a', '~a','~a',~:[FALSE~;TRUE~],  '~a',          ~a,       '~a',    '~a',  ~a,'~{~a~%~}')"
+INSERT INTO article (name,title,logo,        featured,author,moreauthorsp,description,category,date, text)
+             VALUES ('~a', '~a','~a',~:[FALSE~;TRUE~],  '~a',          ~a,       '~a',    '~a',  ~a, '~a')"
                                 name
                                 title
                                 logo
@@ -211,7 +211,7 @@ UPDATE article
        description = '~a',
        category = '~a',
        date = ~a,
-       text = '~{~a~%~}'
+       text = '~a'
  WHERE name = '~a';"
                                 title
                                 logo

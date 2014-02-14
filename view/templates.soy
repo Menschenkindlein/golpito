@@ -63,9 +63,7 @@
             </p>
           </div>
           <p><b>{$article.date |date}</b></p>
-          {foreach $paragraph in $article.text}
-            <p>{$paragraph |noAutoescape}</p>
-          {/foreach}
+          <div id="articleText">{$article.text |markdown}</div>
           <p><b><a href="{$article.category.name |link:category}">{$article.category.title}</a></b></p>
           <p>
             {foreach $tag in $article.tags}
@@ -118,7 +116,7 @@
 									<div class="container">
 									  <div class="carousel-caption">
 										<h4><a href="{$superArticle.name |link:article}">{$superArticle.title}</a></h4>
-										<p>{$superArticle.description}</p>
+										<p>{$superArticle.description |markdown}</p>
 									  </div>
 									</div>
 								</div>
@@ -183,7 +181,7 @@
 								<a href="{$article.name |link:article}" class="thumbnail">
 									<img src="{$article.logo}" alt="{$article.title}">
 								</a>
-								<p>{$article.description}</p>
+								<p>{$article.description |markdown}</p>
 								<h5>
 									<span class="label label-primary">
 										<a style="text-decoration: none; color: white;"
@@ -228,7 +226,7 @@
     <p><b>{$date |date}</b></p>
     <p><b><a href="{$category.name |link:category}">{$category.title}</a></b></p>
     <h2><a href="{$name |link:article}">{$title}</a></h2>
-    <p>{$description}</p>
+    <p>{$description |markdown}</p>
     <p><i><a href="{$primaryAuthor.name |link:author}">{$primaryAuthor.title}</a>{if $moreauthorsp}{sp}etc.{/if}</i></p>
   </div>
 {/template}
@@ -251,7 +249,7 @@
           <div class="page-header">
             <h1>{$category.title}</h1>
           </div>
-          <p>{$category.description}</p>
+          <p>{$category.description |markdown}</p>
           {foreach $article in $articles}
             {call articleInTheList data="$article" /}
           {/foreach}
@@ -322,11 +320,7 @@
           <label><input type="text" value="{$article.category.name}" name="category" /> Категория</label><br />
           <label><textarea name="description">{$article.description}</textarea> Краткое описание статьи</label><br />
           <label>
-            <textarea name="text">{nil}
-              {foreach $paragraph in $article.text}
-                {$paragraph |noAutoescape}{\n}
-              {/foreach}
-            </textarea>
+            <textarea name="text">{$article.text}</textarea>
             Текст статьи</label><br />
           <input type="submit" />
         </form>

@@ -2,6 +2,7 @@
     :depends-on (#:restas
                  #:postmodern
                  #:closure-template
+                 #:cl-markdown
                  #:sqlite)
     :serial t
     :components ((:module "model"

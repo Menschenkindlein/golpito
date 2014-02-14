@@ -82,6 +82,14 @@
                (declare (ignore params env))
                (time-to-string value)))
 
+(closure-template:define-print-syntax printTextMarkdown "markdown" (:constant t))
+
+(closure-template:register-print-handler
+ :common-lisp-backend 'printTextMarkdown
+ :function #'(lambda (params env value)
+               (declare (ignore params env))
+               (cl-markdown:markdown value)))
+
 (closure-template:define-print-syntax printLink (and "link" ":" (or "article" "edit-article" "author" "category" "tag"))
   (:destructure (link |:| type)
                 (declare (ignore link |:|))
