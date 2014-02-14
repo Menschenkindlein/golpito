@@ -89,7 +89,7 @@
  :function #'(lambda (params env value)
                (declare (ignore params env))
                (with-output-to-string (out)
-                 (cl-markdown:markdown value out))))
+                 (cl-markdown:markdown value :stream out))))
 
 (closure-template:define-print-syntax printLink (and "link" ":" (or "article" "edit-article" "author" "category" "tag"))
   (:destructure (link |:| type)
