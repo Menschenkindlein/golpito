@@ -88,7 +88,8 @@
  :common-lisp-backend 'printTextMarkdown
  :function #'(lambda (params env value)
                (declare (ignore params env))
-               (cl-markdown:markdown value)))
+               (with-output-to-string (out)
+                 (cl-markdown:markdown value out))))
 
 (closure-template:define-print-syntax printLink (and "link" ":" (or "article" "edit-article" "author" "category" "tag"))
   (:destructure (link |:| type)
