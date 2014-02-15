@@ -97,7 +97,7 @@
                                    (split-sequence:split-sequence #\Space tags))
                   :category (make-instance 'golpito.model:category :name category)
                   :date (string-to-time date)
-                  :text (split-sequence:split-sequence #\Newline text)))
+                  :text text))
   (restas:redirect 'edit-article :name name))
 
 (restas:define-route edit-author-save ("/edit/author/"
