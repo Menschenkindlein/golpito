@@ -42,7 +42,7 @@
                     (asdf:component-pathname
                      (asdf:find-system :golpito))))
 
-(restas:define-route css ("css/:name.css"
+(restas:define-route css ("css/:(name).css"
                                     :content-type "text/css")
   (local-pathname :name name
                   :type "css"
