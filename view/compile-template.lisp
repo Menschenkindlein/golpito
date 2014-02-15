@@ -43,10 +43,16 @@
                      (asdf:find-system :golpito))))
 
 (restas:define-route custom-css ("css/:(name).css"
-                                    :content-type "text/css")
+                                 :content-type "text/css")
   (local-pathname :name name
                   :type "css"
                   :directory '(:relative "static")))
+(restas:define-route custom-js ("js/:(name).js"
+                                :content-type "application/javascript")
+  (local-pathname :name name
+                  :type "js"
+                  :directory '(:relative "static")))
+
 (restas:define-route bootstrap.css ("css/bootstrap.css"
                                     :content-type "text/css")
   (local-pathname :name "bootstrap"
