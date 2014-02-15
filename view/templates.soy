@@ -332,7 +332,15 @@
         <script type="text/javascript">
          //<![CDATA[
          $("#theText").hide();
-         var editor = new EpicEditor({ textarea: "theText" }).load();
+         var opts = { 
+                      textarea: "theText",
+                      theme: {
+                               base: "/static/css/epiceditor.css",
+                               preview: "/static/css/epiceditor-preview.css",
+                               editor: "/static/css/epiceditor-editor.css"
+                             }
+                     };
+         var editor = new EpicEditor(opts).load();
          //]]>
         </script>
         {/literal}
