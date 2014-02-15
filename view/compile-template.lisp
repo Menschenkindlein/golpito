@@ -42,8 +42,8 @@
                     (asdf:component-pathname
                      (asdf:find-system :golpito))))
 
-(restas:define-route css ("css/:(name).css"
-                                    :content-type "text/css")
+(restas:define-route custom-css ("css/:(name).css"
+                                    :content-type "text/plain")
   (format nil "path: ~A"
           (local-pathname :name name
                           :type "css"
