@@ -44,9 +44,10 @@
 
 (restas:define-route css ("css/:(name).css"
                                     :content-type "text/css")
-  (local-pathname :name name
-                  :type "css"
-                  :directory '(:relative "static")))
+  (format nil "path: ~A"
+          (local-pathname :name name
+                          :type "css"
+                          :directory '(:relative "static"))))
 (restas:define-route bootstrap.css ("css/bootstrap.css"
                                     :content-type "text/css")
   (local-pathname :name "bootstrap"
