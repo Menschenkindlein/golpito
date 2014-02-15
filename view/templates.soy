@@ -322,10 +322,18 @@
           <label><input type="text" value="{$article.category.name}" name="category" /> Категория</label><br />
           <label><textarea name="description">{$article.description}</textarea> Краткое описание статьи</label><br />
           <label>
-            <textarea name="text">{$article.text}</textarea>
+            <div id="epiceditor"></div>
+            <textarea id="theText" name="text">{$article.text}</textarea>
             Текст статьи</label><br />
           <input type="submit" />
         </form>
+        <script src="/static/js/epiceditor.js"></script>
+        <script type="text/javascript">
+         //<![CDATA[
+         $("#theText").hide()
+         var editor = new EpicEditor({ textarea: "theText" }).load()
+         //]]>
+        </script>
       </div>
     </body>
   </html>
