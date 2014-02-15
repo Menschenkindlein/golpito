@@ -1,368 +1,167 @@
-html { padding:0 10px; }
-
 body {
-  margin:0;
-  padding:0;
-  background:#fff;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  line-height: 1.5;
+  font-size: 87.5%;
+  word-wrap: break-word;
+  margin: 2em;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: #fff;
 }
 
-#epiceditor-wrapper{
-	background:white;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 1.0em 0 0.5em;
+  font-weight: inherit;
 }
 
-#epiceditor-preview{
-	padding-top:10px;
-	padding-bottom:10px;
-	font-family: Helvetica,arial,freesans,clean,sans-serif;
-	font-size:13px;
-	line-height:1.6;
+h1 {
+  font-size: 1.357em;
+  color: #000;
 }
 
-#epiceditor-preview>*:first-child{
-	margin-top:0!important;
+h2 {
+  font-size: 1.143em;
 }
 
-#epiceditor-preview>*:last-child{
-	margin-bottom:0!important;
+p {
+  margin: 0 0 1.2em;
 }
 
-#epiceditor-preview a{
-	color:#4183C4;
-	text-decoration:none;
+del {
+  text-decoration: line-through;
 }
 
-#epiceditor-preview a:hover{
-	text-decoration:underline;
+tr:nth-child(odd) {
+  background-color: #dddddd;
 }
 
-#epiceditor-preview h1,
-#epiceditor-preview h2,
-#epiceditor-preview h3,
-#epiceditor-preview h4,
-#epiceditor-preview h5,
-#epiceditor-preview h6{
-	margin:20px 0 10px;
-	padding:0;
-	font-weight:bold;
-	-webkit-font-smoothing:antialiased;
+img {
+  outline: 0;
 }
 
-#epiceditor-preview h1 tt,
-#epiceditor-preview h1 code,
-#epiceditor-preview h2 tt,
-#epiceditor-preview h2 code,
-#epiceditor-preview h3 tt,
-#epiceditor-preview h3 code,
-#epiceditor-preview h4 tt,
-#epiceditor-preview h4 code,
-#epiceditor-preview h5 tt,
-#epiceditor-preview h5 code,
-#epiceditor-preview h6 tt,
-#epiceditor-preview h6 code{
-	font-size:inherit;
+code {
+  background-color: #f2f2f2;
+  background-color: rgba(40, 40, 0, 0.06);
 }
 
-#epiceditor-preview h1{
-	font-size:28px;
-	color:#000;
+pre {
+  background-color: #f2f2f2;
+  background-color: rgba(40, 40, 0, 0.06);
+  margin: 10px 0;
+  overflow: hidden;
+  padding: 15px;
+  white-space: pre-wrap;
 }
 
-#epiceditor-preview h2{
-	font-size:24px;
-	border-bottom:1px solid #ccc;
-	color:#000;
+pre code {
+  font-size: 100%;
+  background-color: transparent;
 }
 
-#epiceditor-preview h3{
-	font-size:18px;
+blockquote {
+  background: #f7f7f7;
+  border-left: 1px solid #bbb;
+  font-style: italic;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
 }
 
-#epiceditor-preview h4{
-	font-size:16px;
+blockquote:before {
+  color: #bbb;
+  content: "\201C";
+  font-size: 3em;
+  line-height: 0.1em;
+  margin-right: 0.2em;
+  vertical-align: -.4em;
 }
 
-#epiceditor-preview h5{
-	font-size:14px;
+blockquote:after {
+  color: #bbb;
+  content: "\201D";
+  font-size: 3em;
+  line-height: 0.1em;
+  vertical-align: -.45em;
 }
 
-#epiceditor-preview h6{
-	color:#777;
-	font-size:14px;
+blockquote > p:first-child {
+  display: inline;
 }
 
-#epiceditor-preview p,
-#epiceditor-preview blockquote,
-#epiceditor-preview ul,
-#epiceditor-preview ol,
-#epiceditor-preview dl,
-#epiceditor-preview li,
-#epiceditor-preview table,
-#epiceditor-preview pre{
-	margin:15px 0;
+table {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  border: 0;
+  border-spacing: 0;
+  font-size: 0.857em;
+  margin: 10px 0;
+  width: 100%;
 }
 
-#epiceditor-preview hr{
-	background:transparent url('../../images/modules/pulls/dirty-shade.png') repeat-x 0 0;
-	border:0 none;
-	color:#ccc;
-	height:4px;
-	padding:0;
+table table {
+  font-size: 1em;
 }
 
-#epiceditor-preview>h2:first-child,
-#epiceditor-preview>h1:first-child,
-#epiceditor-preview>h1:first-child+h2,
-#epiceditor-preview>h3:first-child,
-#epiceditor-preview>h4:first-child,
-#epiceditor-preview>h5:first-child,
-#epiceditor-preview>h6:first-child{
-	margin-top:0;
-	padding-top:0;
+table tr th {
+  background: #757575;
+  background: rgba(0, 0, 0, 0.51);
+  border-bottom-style: none;
 }
 
-#epiceditor-preview h1+p,
-#epiceditor-preview h2+p,
-#epiceditor-preview h3+p,
-#epiceditor-preview h4+p,
-#epiceditor-preview h5+p,
-#epiceditor-preview h6+p{
-	margin-top:0;
+table tr th,
+table tr th a,
+table tr th a:hover {
+  color: #FFF;
+  font-weight: bold;
 }
 
-#epiceditor-preview li p.first{
-	display:inline-block;
+table tbody tr th {
+  vertical-align: top;
 }
 
-#epiceditor-preview ul,
-#epiceditor-preview ol{
-	padding-left:30px;
+tr td,
+tr th {
+  padding: 4px 9px;
+  border: 1px solid #fff;
+  text-align: left; /* LTR */
 }
 
-#epiceditor-preview ul li>:first-child,
-#epiceditor-preview ol li>:first-child{
-	margin-top:0;
+tr:nth-child(odd) {
+  background: #e4e4e4;
+  background: rgba(0, 0, 0, 0.105);
 }
 
-#epiceditor-preview ul li>:last-child,
-#epiceditor-preview ol li>:last-child{
-	margin-bottom:0;
+tr,
+tr:nth-child(even) {
+  background: #efefef;
+  background: rgba(0, 0, 0, 0.063);
 }
 
-#epiceditor-preview dl{
-	padding:0;
+a {
+  color: #0071B3;
 }
 
-#epiceditor-preview dl dt{
-	font-size:14px;
-	font-weight:bold;
-	font-style:italic;
-	padding:0;
-	margin:15px 0 5px;
+a:hover,
+a:focus {
+  color: #018fe2;
 }
 
-#epiceditor-preview dl dt:first-child{
-	padding:0;
+a:active {
+  color: #23aeff;
 }
 
-#epiceditor-preview dl dt>:first-child{
-	margin-top:0;
+a:link,
+a:visited {
+  text-decoration: none;
 }
 
-#epiceditor-preview dl dt>:last-child{
-	margin-bottom:0;
+a:hover,
+a:active,
+a:focus {
+  text-decoration: underline;
 }
-
-#epiceditor-preview dl dd{
-	margin:0 0 15px;
-	padding:0 15px;
-}
-
-#epiceditor-preview dl dd>:first-child{
-	margin-top:0;
-}
-
-#epiceditor-preview dl dd>:last-child{
-	margin-bottom:0;
-}
-
-#epiceditor-preview blockquote{
-	border-left:4px solid #DDD;
-	padding:0 15px;
-	color:#777;
-}
-
-#epiceditor-preview blockquote>:first-child{
-	margin-top:0;
-}
-
-#epiceditor-preview blockquote>:last-child{
-	margin-bottom:0;
-}
-
-#epiceditor-preview table{
-	padding:0;
-	border-collapse: collapse;
-	border-spacing: 0;
-	font-size: 100%;
-	font: inherit;
-}
-
-#epiceditor-preview table tr{
-	border-top:1px solid #ccc;
-	background-color:#fff;
-	margin:0;
-	padding:0;
-}
-
-#epiceditor-preview table tr:nth-child(2n){
-	background-color:#f8f8f8;
-}
-
-#epiceditor-preview table tr th{
-	font-weight:bold;
-}
-
-#epiceditor-preview table tr th,
-#epiceditor-preview table tr td{
-	border:1px solid #ccc;
-	text-align:left;
-	margin:0;
-	padding:6px 13px;
-}
-
-#epiceditor-preview table tr th>:first-child,
-#epiceditor-preview table tr td>:first-child{
-	margin-top:0;
-}
-
-#epiceditor-preview table tr th>:last-child,
-#epiceditor-preview table tr td>:last-child{
-	margin-bottom:0;
-}
-
-#epiceditor-preview img{
-	max-width:100%;
-}
-
-#epiceditor-preview span.frame{
-	display:block;
-	overflow:hidden;
-}
-
-#epiceditor-preview span.frame>span{
-	border:1px solid #ddd;
-	display:block;
-	float:left;
-	overflow:hidden;
-	margin:13px 0 0;
-	padding:7px;
-	width:auto;
-}
-
-#epiceditor-preview span.frame span img{
-	display:block;
-	float:left;
-}
-
-#epiceditor-preview span.frame span span{
-	clear:both;
-	color:#333;
-	display:block;
-	padding:5px 0 0;
-}
-
-#epiceditor-preview span.align-center{
-	display:block;
-	overflow:hidden;
-	clear:both;
-}
-
-#epiceditor-preview span.align-center>span{
-	display:block;
-	overflow:hidden;
-	margin:13px auto 0;
-	text-align:center;
-}
-
-#epiceditor-preview span.align-center span img{
-	margin:0 auto;
-	text-align:center;
-}
-
-#epiceditor-preview span.align-right{
-	display:block;
-	overflow:hidden;
-	clear:both;
-}
-
-#epiceditor-preview span.align-right>span{
-	display:block;
-	overflow:hidden;
-	margin:13px 0 0;
-	text-align:right;
-}
-
-#epiceditor-preview span.align-right span img{
-	margin:0;
-	text-align:right;
-}
-
-#epiceditor-preview span.float-left{
-	display:block;
-	margin-right:13px;
-	overflow:hidden;
-	float:left;
-}
-
-#epiceditor-preview span.float-left span{
-	margin:13px 0 0;
-}
-
-#epiceditor-preview span.float-right{
-	display:block;
-	margin-left:13px;
-	overflow:hidden;
-	float:right;
-}
-
-#epiceditor-preview span.float-right>span{
-	display:block;
-	overflow:hidden;
-	margin:13px auto 0;
-	text-align:right;
-}
-
-#epiceditor-preview code,
-#epiceditor-preview tt{
-	margin:0 2px;
-	padding:0 5px;
-	white-space:nowrap;
-	border:1px solid #eaeaea;
-	background-color:#f8f8f8;
-	border-radius:3px;
-}
-
-#epiceditor-preview pre>code{
-	margin:0;
-	padding:0;
-	white-space:pre;
-	border:none;
-	background:transparent;
-}
-
-#epiceditor-preview .highlight pre,
-#epiceditor-preview pre{
-	background-color:#f8f8f8;
-	border:1px solid #ccc;
-	font-size:13px;
-	line-height:19px;
-	overflow:auto;
-	padding:6px 10px;
-	border-radius:3px;
-}
-
-#epiceditor-preview pre code,
-#epiceditor-preview pre tt{
-	background-color:transparent;
-	border:none;
-}
+        
