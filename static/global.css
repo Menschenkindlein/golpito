@@ -68,3 +68,6 @@
          border-radius:100px / 10px;
 }
  
+ #wrap {
+	padding-top: -30px;
+ }
