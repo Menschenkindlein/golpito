@@ -70,9 +70,14 @@
  
  #wrap {
 	position: absolute;
-	top: 0px;
+	top: 5px;
 	width: 100%;
-	left: 5px;
-	
+ }
+ 
+ .link-menu {
+	padding 5px 5px 5px 5px;
+ }
+ 
+ #MenuNav {
 	
  }
