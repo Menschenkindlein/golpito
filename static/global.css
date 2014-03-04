@@ -69,5 +69,6 @@
 }
  
  #wrap {
-	padding-top: -30px;
+	float:top;
+	padding-top: 30px;
  }
