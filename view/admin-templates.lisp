@@ -17,7 +17,7 @@
     <form action=\"~a\" method=\"post\">
       <input type=\"hidden\" value=\"~a\" name=\"name\" />
       <label><input type=\"text\" value=\"~a\" name=\"title\" /> Имя автора</label><br />
-      <label><textarea name=\"description\">~{~a~^~%~}</textarea> Краткое описание особенностей автора</label><br />
+      <label><textarea name=\"description\">~a</textarea> Краткое описание особенностей автора</label><br />
       <input type=\"submit\" />
     </form>
   </body>
@@ -25,7 +25,7 @@
             (restas:genurl *edit-author-page-symbol*)
             name
             title
-            (split-sequence:split-sequence #\Newline description :remove-empty-subseqs t))))
+            description)))
 
 (defun tmpl-edit-category (category)
   (golpito.view.tmpl:edit-category-tmpl (make-environment :category category)))
@@ -44,7 +44,7 @@
     <form action=\"~a\" method=\"post\">
       <input type=\"hidden\" value=\"~a\" name=\"name\" />
       <label><input type=\"text\" value=\"~a\" name=\"title\" /> Полное имя тега</label><br />
-      <label><textarea name=\"description\">~{~a~^~%~}</textarea> Краткое описание тега</label><br />
+      <label><textarea name=\"description\">~a</textarea> Краткое описание тега</label><br />
       <input type=\"submit\" />
     </form>
   </body>
@@ -52,4 +52,4 @@
             (restas:genurl *edit-tag-page-symbol*)
             name
             title
-            (split-sequence:split-sequence #\Newline description :remove-empty-subseqs t))))
+            description)))
