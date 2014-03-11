@@ -6,6 +6,10 @@
 	//color: #
 }
 
+.link-menu {
+	padding: 5px 5px;
+ }
+
 /**/
 .curved-hz-2 {
     padding:1em;
@@ -74,9 +78,7 @@
 	width: 100%;
  }
  
-.link-menu {
-	padding 5px 5px;
- }
+
  
  #MenuNav {
 	
