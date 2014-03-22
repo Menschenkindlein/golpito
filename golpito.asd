@@ -15,6 +15,7 @@
                           :serial t
                           :components
                           ((:static-file "templates.soy")
+                           (:static-file "admin-templates.soy")
                            (:file "compile-template")
                            (:file "templates")
                            (:file "admin-templates")))

@@ -118,4 +118,5 @@
                  (category (restas:genurl *category-page-symbol* :category name))
                  (tag (restas:genurl *tag-page-symbol* :tag name)))))
 
-(closure-template:compile-template :common-lisp-backend (local-pathname :name "templates" :type "soy" :directory '(:relative "view")))
+(loop for template in (directory (local-pathname :name :wild :type "soy" :directory '(:relative "view"))) do
+     (closure-template:compile-template :common-lisp-backend template))
