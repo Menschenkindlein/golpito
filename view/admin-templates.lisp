@@ -1,7 +1,8 @@
 (in-package #:golpito.view)
 
 (defun tmpl-edit-article (article)
-  (golpito.view.tmpl:edit-article-tmpl (make-environment :article article)))
+  (golpito.view.tmpl:edit-article-tmpl
+   (make-environment (list :article article))))
 
 (defun tmpl-edit-author (author)
   (with-slots
@@ -28,7 +29,8 @@
             description)))
 
 (defun tmpl-edit-category (category)
-  (golpito.view.tmpl:edit-category-tmpl (make-environment :category category)))
+  (golpito.view.tmpl:edit-category-tmpl
+   (make-environment (list :category category))))
 
 (defun tmpl-edit-tag (tag)
   (with-slots
