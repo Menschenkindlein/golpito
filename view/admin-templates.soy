@@ -1,0 +1,75 @@
+{namespace golpito.view.tmpl}
+
+{template editArticleTmpl}
+  <html>
+    <head>
+      <title>Edit article</title>
+      {call head data="$head" /}
+    </head>
+    <body>
+      <div class="container">
+        <h1>Edit article</h1>
+        <form action="/edit/article/" method="post">
+          <input type="hidden" value="{$article.name}" name="name" />
+          <img src="{$article.logo}" class="thumbnail" /><br />
+          <label><input type="text" value="{$article.logo}" name="logo" /> URL картинки</label><br />
+          <label><input type="checkbox"
+                        {if isNonnull($article.featured)} checked="checked"{/if}
+                        name="featured" value="1" /> Отображать статью в карусели?</label><br />
+          <label><input type="text" value="{$article.title}" name="title" /> Название статьи</label><br />
+          <label><input type="text" value="{foreach $author in $article.authors}
+                                             {$author.name}{if not(isLast($author))}{sp}{/if}
+                                           {/foreach}" name="authors" /> Авторы статьи, разделенные пробелами</label><br />
+          <label><input type="text" value="{foreach $tag in $article.tags}
+                                             {$tag.name}{if not(isLast($tag))}{sp}{/if}
+                                           {/foreach}" name="tags" /> Теги статьи, разделенные пробелами</label><br />
+          <label><input type="text" value="{$article.date |date}" name="date" /> Дата в формате ДД.ММ.ГГГГ ЧЧ:мм</label><br />
+          <label><input type="text" value="{$article.category.name}" name="category" /> Категория</label><br />
+          <label><textarea name="description">{$article.description}</textarea> Краткое описание статьи</label><br />
+          <label>
+            <div id="epiceditor" style="width: 600px;"></div>
+            <textarea id="theText" name="text">{$article.text}</textarea>
+            Текст статьи</label><br />
+          <input type="submit" />
+        </form>
+        {literal}
+        <script src="/static/js/epiceditor.js"></script>
+        <script type="text/javascript">
+         //<![CDATA[
+         $("#theText").hide();
+         var opts = { 
+                      textarea: "theText",
+                      theme: {
+                               base: "/static/css/epiceditor.css",
+                               preview: "/static/css/epiceditor-preview.css",
+                               editor: "/static/css/epiceditor-editor.css"
+                             }
+                     };
+         var editor = new EpicEditor(opts).load();
+         //]]>
+        </script>
+        {/literal}
+      </div>
+    </body>
+  </html>
+{/template}
+
+{template editCategoryTmpl}
+  <html>
+    <head>
+      <title>Edit category</title>
+      {call head data="$head" /}
+    </head>
+    <body>
+      <div class="container">
+        <h1>Edit category</h1>
+        <form action="/edit/category/" method="post">
+          <input type="hidden" value="{$category.name}" name="name" />
+          <label><input type="text" value="{$category.title}" name="title" /> Название категории</label><br />
+          <label><textarea name="description">{$category.description}</textarea> Краткое описание категории</label><br />
+          <input type="submit" />
+        </form>
+      </div>
+    </body>
+  </html>
+{/template}
