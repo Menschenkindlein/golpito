@@ -12,10 +12,10 @@
         <h1>Edit article</h1>
         <form action="/edit/article/" method="post">
           <input type="hidden" value="{$article.name}" name="name" />
-          <img src="{$article.logo}" class="thumbnail" /><br />
+          <img src="{$article.logo}" class="thumbnail" style="max-width: 600px;" /><br />
           <label><input type="text" value="{$article.logo}" name="logo" /> URL картинки</label><br />
           <label><input type="checkbox"
-                        {if isNonnull($article.featured)} checked="checked"{/if}
+                        {if isNonnull($article.featured)} checked{/if}
                         name="featured" value="1" /> Отображать статью в карусели?</label><br />
           <label><input type="text" value="{$article.title}" name="title" /> Название статьи</label><br />
           <label><input type="text" value="{foreach $author in $article.authors}
