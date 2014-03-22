@@ -3,7 +3,7 @@
                  #:postmodern
                  #:closure-template
                  #:cl-markdown
-                 #:sqlite)
+                 #:ironclad)
     :serial t
     :components ((:module "model"
                           :serial t

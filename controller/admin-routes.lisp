@@ -2,11 +2,19 @@
 
 (defclass http-auth-route (routes:proxy-route) ())
 
+(defun string-to-seq (string)
+  (map '(vector (unsigned-byte 8)) #'char-code string))
+
 (defmethod routes:route-check-conditions ((route http-auth-route) bindings)
   (and (call-next-method)
        (multiple-value-bind (user password) (hunchentoot:authorization)
          (or (and (string= user "admin")
-                  (string= password "password"))
+                  (equal
+                   (ironclad:digest-sequence
+                    'ironclad:md5
+                    (string-to-seq password))
+                   #(95 77 204 59 90 167 101 214 29
+                     131 39 222 184 130 207 153)))
              (hunchentoot:require-authorization)))))
 
 (defun @http-auth-require (route)
