@@ -5,6 +5,7 @@
     <head>
       <title>Edit article</title>
       {call head data="$head" /}
+      <link href="/static/css/admin.css" rel="stylesheet">
     </head>
     <body>
       <div class="container">
@@ -57,16 +58,17 @@
 {template editCategoryTmpl}
   <html>
     <head>
-      <title>Edit category</title>
+      <title>Edit {$name}</title>
       {call head data="$head" /}
+      <link href="/static/css/admin.css" rel="stylesheet">
     </head>
     <body>
       <div class="container">
         <h1>Edit category</h1>
-        <form action="/edit/category/" method="post">
+        <form action="/edit/{$name}/" method="post">
           <input type="hidden" value="{$category.name}" name="name" />
-          <label><input type="text" value="{$category.title}" name="title" /> Название категории</label><br />
-          <label><textarea name="description">{$category.description}</textarea> Краткое описание категории</label><br />
+          <label><input type="text" value="{$category.title}" name="title" /> {$nameLabel}</label><br />
+          <label><textarea name="description">{$category.description}</textarea> {$nameDescription}</label><br />
           <input type="submit" />
         </form>
       </div>
