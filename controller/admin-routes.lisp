@@ -9,7 +9,7 @@
   (and (call-next-method)
        (multiple-value-bind (user password) (hunchentoot:authorization)
          (or (and (string= user "admin")
-                  (equal
+                  (equalp
                    (ironclad:digest-sequence
                     'ironclad:md5
                     (string-to-seq password))
