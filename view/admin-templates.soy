@@ -26,11 +26,12 @@
                                            {/foreach}" name="tags" /> Теги статьи, разделенные пробелами</label><br />
           <label><input type="text" value="{$article.date |date}" name="date" /> Дата в формате ДД.ММ.ГГГГ ЧЧ:мм</label><br />
           <label><input type="text" value="{$article.category.name}" name="category" /> Категория</label><br />
-          <label><textarea name="description">{$article.description}</textarea> Краткое описание статьи</label><br />
+          <label>Краткое описание статьи<br /><textarea name="description">{$article.description}</textarea></label><br />
           <label>
+            Текст статьи <br />
             <div id="epiceditor" style="width: 600px;"></div>
             <textarea id="theText" name="text">{$article.text}</textarea>
-            Текст статьи</label><br />
+          </label><br />
           <input type="submit" />
         </form>
         {literal}
