@@ -6,10 +6,29 @@
 	//color: #000000;
 }
 
-.link-menu {
-	padding: 5px 10px !important;
- }
+.Moz>p {
+margin: 0 0 10px;
+}
 
+/*====Menu====*/
+
+.MenuText  {
+	font-size:18px;
+	color: #f0f0f0;
+ }
+.Red {
+	color: Red;
+}
+
+.Blue {
+	color: Blue;
+}
+
+.Green {
+	color: Green;
+}
+ 
+ 
 /**/
 .curved-hz-2 {
     padding:1em;
@@ -46,7 +65,7 @@
 
 .curved-hz-1 {
     padding:1em;
-    margin:2em 10px 4em;
+   margin: 10px Auto 5px;
     background:#fff;
     -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
        -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
@@ -59,23 +78,12 @@
     position:absolute;
     z-index:-2;
 }
- 
-.curved-hz-1:before {
-    top:50%;
-    bottom:0px;
-    left:10px;
-    right:10px;
-    -webkit-box-shadow:0 0 15px rgba(0,0,0,0.6);
-       -moz-box-shadow:0 0 15px rgba(0,0,0,0.6);
-            box-shadow:0 0 15px rgba(0,0,0,0.6);
-    -moz-border-radius:100px / 10px;
-         border-radius:100px / 10px;
-}
- 
+  
  #wrap {
 	position: absolute;
 	top: 5px;
-	width: 100%;
+	left: 0.5%;
+	width: 99%;
  }
  
 
@@ -83,3 +91,14 @@
  #MenuNav {
 	
  }
+
+@font-face {
+  font-family: 'Catenary Stamp';
+
+  src: url('../fonts/Catenary Stamp.ttf');
+  src: url('../fonts/Catenary Stamp.ttf') format('truetype');
+}
+.navbar-brand {
+  font-family: 'Catenary Stamp';
+  font-size: 48px;
+}
