@@ -2,26 +2,26 @@
 
 {template navBar private="true"}
   {literal}
-    <div class="navbar navbar-default" role="navigation" id="MenuNav">
-      
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand link-menu" style="color: #336699" href="/"><h3>ЗаНоВО</h3></a>
-        </div>
-        <div class="collapse navbar-collapse">
-			<ul class="nav navbar-nav">
-				<li><a class="link-menu" href="#"><h3>Link1</h3></a></li>
-				<li><a class="link-menu" href="#"><h3>Link2</h3></a></li>
-				<li><a class="link-menu" href="#"><h3>Link3</h3></a></li>
-				<li><a class="link-menu" href="#"><h3>Link4</h3></a></li>
-			</ul>
+    <div class="navbar navbar-default navbar-inverse" role="navigation"> 
+		<div class="container">
+			<div class="navbar-header">  
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">  
+					<span class="sr-only">Toggle navigation</span>  
+					<span class="icon-bar"></span>  
+					<span class="icon-bar"></span>  
+					<span class="icon-bar"></span>  
+				</button>  
+				<a class="navbar-brand MenuText" href="#">За<span class="Red">Но</span>Во</a>  
+			</div>  
+			<div class="collapse navbar-collapse">  
+				<ul class="nav navbar-nav">  
+					<li><a href="#"><span class="glyphicon glyphicon-asterisk Red"><span class="MenuText">Home</span></span></a></li>  
+					<li><a href="#shop"><span class="glyphicon glyphicon-asterisk Blue"><span class="MenuText">Shop</span></span></a></li>  
+					<li><a href="#support"><span class="glyphicon glyphicon-asterisk Green"><span class="MenuText">Support</span></span></a></li>  
+				</ul>  
+			</div><!-- /.nav-collapse -->  
 		</div>
-    </div>
+	</div>  
   {/literal}
 {/template}
 
