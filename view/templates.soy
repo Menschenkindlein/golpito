@@ -140,7 +140,7 @@
 			
 			
 					{foreach $article in $articles}
-					<div class="col-4 col-sm-4 col-lg-6"  style="height: 480px;">
+					<div class="col-4 col-sm-4 col-lg-6"  style="height: 520px;">
 						<a style="text-decoration: none; color: #000000;" href="{$article.name |link:article}" >
 							<h3>{$article.title}</h3>
 							<h5>
@@ -152,7 +152,9 @@
 							<a href="{$article.name |link:article}" class="thumbnail">
 								<img src="{$article.logo}" alt="{$article.title}">
 							</a>
-							<p>{$article.description |markdown |noAutoescape}</p>
+							<div style="max-height: 220px;">
+								<p>{$article.description |markdown |noAutoescape}</p>
+							</div>
 							<h5>
 								<span class="label label-primary">
 									<a style="text-decoration: none; color: white;"
