@@ -148,7 +148,7 @@
 								{$article.primaryAuthor.title}
 								</a>{if $article.moreauthorsp} и др.{/if}
 							</h5>
-
+							<h6>{$article.date |date}</h6>
 							<a href="{$article.name |link:article}" class="thumbnail">
 								<img src="{$article.logo}" alt="{$article.title}">
 							</a>
