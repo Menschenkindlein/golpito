@@ -1,0 +1,32 @@
+{namespace golpito.view.helper}
+
+{template crsl}
+  <!--Begin Carousel -->
+  <div glyphicons-halflings-regular.woff>
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+ 
+   <!-- Indicators -->
+   <ol class="carousel-indicators">
+   {foreach $item in $items}
+    <li data-target="#myCarousel" data-slide-to="{index($item)}"{if isFirst($item)}{sp}class="active"{/if}></li>
+   {/foreach}
+   </ol>
+   <div class="carousel-inner">
+   {foreach $item in $items}
+    <div class="item{if isFirst($item)}{sp}active{/if}" style="height:350px; overflow:hidden;">
+     <img src="{$item.image}" style="width: 100%;" alt="logo" />
+     <div class="container">
+      <div class="carousel-caption">
+       {$item.text |noAutoescape}
+      </div>
+     </div>
+    </div>
+   {/foreach}
+   </div>
+   <a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+   <a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+ 
+  </div>
+  </div>
+  <!--  End Carousel  -->
+{/template}
