@@ -73,7 +73,7 @@
   (local-pathname :name "jquery"
                   :type "js"
                   :directory '(:relative "static")))
-(restas:define-route fonts ("static/fonts/:(name).:type"
+(restas:define-route fonts ("fonts/:(name).:type"
                                  :content-type "application/octet-stream")
   (local-pathname :name name
                   :type type
