@@ -125,7 +125,7 @@
                             (setf (getf item :text)
                                   (with-output-to-string (out)
                                     (cl-markdown:markdown
-                                     (format nil "~a~^~%" (getf item :text)))
+                                     (format nil "~a~^~%" (getf item :text))
                                      :stream out)))
                             (push item result))
                           (return (nreverse result))))))
