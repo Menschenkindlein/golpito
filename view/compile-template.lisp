@@ -73,9 +73,9 @@
   (local-pathname :name "jquery"
                   :type "js"
                   :directory '(:relative "static")))
-(restas:define-route glyphicons ("css/glyphicons-halflings-regular.:type"
+(restas:define-route fonts ("static/fonts/:(name).:type"
                                  :content-type "application/xml")
-  (local-pathname :name "glyphicons-halflings-regular"
+  (local-pathname :name name
                   :type type
                   :directory '(:relative "static")))
 

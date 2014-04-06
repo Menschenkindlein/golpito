@@ -3,7 +3,7 @@
 {template crsl}
   <!--Begin Carousel -->
   <div glyphicons-halflings-regular.woff>
-  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <div id="myCarousel" class="carousel slide" style="width: 640px;" data-ride="carousel">
  
    <!-- Indicators -->
    <ol class="carousel-indicators">
