@@ -76,6 +76,11 @@
                #'alphanumericp timestring))
     (encode-universal-time 1 minute hour day month year)))
 
+(defun standardize-newlines (text)
+  (ppcre:regex-replace-all "\\r"
+                           (ppcre:regex-replace-all "\\r\\n" text "\\n")
+                           "\\n"))
+
 (restas:define-route edit-article-save ("/edit/article/"
                                         :method :POST)
   (:decorators #'@http-auth-require)
@@ -96,7 +101,7 @@
                   :logo logo
                   :title title
                   :featured featured
-                  :description description
+                  :description (standardize-newlines description)
                   :authors (mapcar (lambda (name) (make-instance 'golpito.model:author
                                                                  :name name))
                                    (split-sequence:split-sequence #\Space authors))
@@ -105,7 +110,7 @@
                                    (split-sequence:split-sequence #\Space tags))
                   :category (make-instance 'golpito.model:category :name category)
                   :date (string-to-time date)
-                  :text text))
+                  :text (standardize-newlines text)))
   (restas:redirect 'edit-article :name name))
 
 (restas:define-route edit-author-save ("/edit/author/"
@@ -119,7 +124,7 @@
    (make-instance 'golpito.model:author
                   :name name
                   :title title
-                  :description description))
+                  :description (standardize-newlines description)))
   (restas:redirect 'edit-author :name name))
 (restas:define-route edit-category-save ("/edit/category/"
                                          :method :POST)
@@ -132,7 +137,7 @@
    (make-instance 'golpito.model:category
                   :name name
                   :title title
-                  :description description))
+                  :description (standardize-newlines description)))
   (restas:redirect 'edit-category :name name))
 (restas:define-route edit-tag-save ("/edit/tag/"
                                     :method :POST)
@@ -145,5 +150,5 @@
    (make-instance 'golpito.model:tag
                   :name name
                   :title title
-                  :description description))
+                  :description (standardize-newlines description)))
   (restas:redirect 'edit-tag :name name))

@@ -1,5 +1,6 @@
 (asdf:defsystem golpito
     :depends-on (#:restas
+                 #:cl-ppcre
                  #:postmodern
                  #:closure-template
                  #:cl-markdown
