@@ -98,7 +98,7 @@
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (closure-template:compile-template
    :common-lisp-backend
-   (local-pathname :name "helper" :type "soy" :directory '(:relative "view"))))
+   (local-pathname :name "helper" :type "soy1" :directory '(:relative "view"))))
 
 (defun preprocess-markdown (text)
   (labels ((extract-crsl (stream)
@@ -136,7 +136,7 @@
            do (write-line
                (cond
                  ((string= line ":crsl")
-                  (golpito.view.helper:crsl (list :crsl (extract-crsl in)))
+                  (golpito.view.helper:crsl (list :items (extract-crsl in)))
                   (t line)))
                out))))))
 
