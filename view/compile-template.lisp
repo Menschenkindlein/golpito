@@ -74,7 +74,7 @@
                   :type "js"
                   :directory '(:relative "static")))
 (restas:define-route fonts ("static/fonts/:(name).:type"
-                                 :content-type "application/xml")
+                                 :content-type "application/octet-stream")
   (local-pathname :name name
                   :type type
                   :directory '(:relative "static")))
