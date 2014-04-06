@@ -17,6 +17,7 @@
                           :components
                           ((:static-file "templates.soy")
                            (:static-file "admin-templates.soy")
+                           (:static-file "helper.soy")
                            (:file "compile-template")
                            (:file "templates")
                            (:file "admin-templates")))

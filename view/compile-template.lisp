@@ -95,12 +95,56 @@
 
 (closure-template:define-print-syntax printTextMarkdown "markdown" (:constant t))
 
+(closure-template:compile-template
+ :common-lisp-backend
+ (local-pathname :name "helper" :type "soy" :directory '(:relative "view")))
+
+(defun preprocess-markdown (text)
+  (labels ((extract-crsl (stream)
+             (loop
+                with item
+                with result
+                for line = (read-line in nil)
+                until (or (not line) (string= line ":end-crsl"))
+                do (if (= 0 (search "http://" line))
+                       (progn
+                         (when item
+                           (setf (getf item :text)
+                                 (with-output-to-string (out)
+                                   (cl-markdown:markdown
+                                    (format nil "~a~^~%" (getf item :text))
+                                    :stream out)))
+                           (push item result)
+                           (setf item nil))
+                         (setf (getf item :image) line))
+                       (push line (getf item :text)))
+                finally (progn
+                          (when item
+                            (setf (getf item :text)
+                                  (with-output-to-string (out)
+                                    (cl-markdown:markdown
+                                     (format nil "~a~^~%" (getf item :text))
+                                     :stream out)))
+                            (push item result))
+                          (return (nreverse result))))))
+    (with-output-to-string (out)
+      (with-input-from-string (in text)
+        (loop
+           for line = (read-line in nil)
+           until (not line)
+           do (write-line
+               (cond
+                 ((string= line ":crsl")
+                  (golpito.view.helper:crsl (list :crsl (extract-crsl in)))
+                  (t line)))
+               out))))
+
 (closure-template:register-print-handler
  :common-lisp-backend 'printTextMarkdown
  :function #'(lambda (params env value)
                (declare (ignore params env))
                (with-output-to-string (out)
-                 (cl-markdown:markdown value :stream out))))
+                 (cl-markdown:markdown (preprocess-markdown value) :stream out))))
 
 (closure-template:define-print-syntax printLink (and "link" ":" (or "article" "edit-article" "author" "category" "tag"))
   (:destructure (link |:| type)
