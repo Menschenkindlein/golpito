@@ -95,9 +95,10 @@
 
 (closure-template:define-print-syntax printTextMarkdown "markdown" (:constant t))
 
-(closure-template:compile-template
- :common-lisp-backend
- (local-pathname :name "helper" :type "soy" :directory '(:relative "view")))
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (closure-template:compile-template
+   :common-lisp-backend
+   (local-pathname :name "helper" :type "soy" :directory '(:relative "view"))))
 
 (defun preprocess-markdown (text)
   (labels ((extract-crsl (stream)
@@ -137,7 +138,7 @@
                  ((string= line ":crsl")
                   (golpito.view.helper:crsl (list :crsl (extract-crsl in)))
                   (t line)))
-               out))))
+               out))))))
 
 (closure-template:register-print-handler
  :common-lisp-backend 'printTextMarkdown
