@@ -77,7 +77,7 @@
     (encode-universal-time 1 minute hour day month year)))
 
 (defun standardize-newlines (text)
-  (let ((newline (format nil "%")))
+  (let ((newline (format nil "~%")))
     (ppcre:regex-replace-all "\\r"
                              (ppcre:regex-replace-all "\\r\\n" text newline)
                              newline)))
