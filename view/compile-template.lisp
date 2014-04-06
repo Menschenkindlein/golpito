@@ -52,27 +52,6 @@
   (local-pathname :name name
                   :type "js"
                   :directory '(:relative "static")))
-
-(restas:define-route bootstrap.css ("css/bootstrap.css"
-                                    :content-type "text/css")
-  (local-pathname :name "bootstrap"
-                  :type "css"
-                  :directory '(:relative "static")))
-(restas:define-route bootstrap.js ("js/bootstrap.js"
-                                    :content-type "application/javascript")
-  (local-pathname :name "bootstrap"
-                  :type "js"
-                  :directory '(:relative "static")))
-(restas:define-route jquery.js ("js/jquery.js"
-                             :content-type "application/javascript")
-  (local-pathname :name "jquery"
-                  :type "js"
-                  :directory '(:relative "static")))
-(restas:define-route jquery.js ("js/jquery.js"
-                             :content-type "application/javascript")
-  (local-pathname :name "jquery"
-                  :type "js"
-                  :directory '(:relative "static")))
 (restas:define-route fonts ("fonts/:(name).:type"
                                  :content-type "application/octet-stream")
   (local-pathname :name name
