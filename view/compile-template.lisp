@@ -105,9 +105,10 @@
              (loop
                 with item
                 with result
-                for line = (read-line in nil)
+                for line = (read-line stream nil)
                 until (or (not line) (string= line ":end-crsl"))
-                do (if (= 0 (search "http://" line))
+                do (if (search "http://" line
+                               :end2 (min (length line) #.(length "http://")))
                        (progn
                          (when item
                            (setf (getf item :text)
@@ -124,7 +125,7 @@
                             (setf (getf item :text)
                                   (with-output-to-string (out)
                                     (cl-markdown:markdown
-                                     (format nil "~a~^~%" (getf item :text))
+                                     (format nil "~a~^~%" (getf item :text)))
                                      :stream out)))
                             (push item result))
                           (return (nreverse result))))))
