@@ -136,8 +136,8 @@
            do (write-line
                (cond
                  ((string= line ":crsl")
-                  (golpito.view.helper:crsl (list :items (extract-crsl in)))
-                  (t line)))
+                  (golpito.view.helper:crsl (list :items (extract-crsl in))))
+                 (t line))
                out))))))
 
 (closure-template:register-print-handler
