@@ -77,9 +77,10 @@
     (encode-universal-time 1 minute hour day month year)))
 
 (defun standardize-newlines (text)
-  (ppcre:regex-replace-all "\\r"
-                           (ppcre:regex-replace-all "\\r\\n" text "\\n")
-                           "\\n"))
+  (let ((newline (format nil "%")))
+    (ppcre:regex-replace-all "\\r"
+                             (ppcre:regex-replace-all "\\r\\n" text newline)
+                             newline)))
 
 (restas:define-route edit-article-save ("/edit/article/"
                                         :method :POST)
